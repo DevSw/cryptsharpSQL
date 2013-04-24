@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CryptTest")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CryptSharpSQL")]
+[assembly: AssemblyDescription("Fork of CryptSharp")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ChrisMckee.co.uk")]
-[assembly: AssemblyProduct("CryptTest")]
-[assembly: AssemblyCopyright("Copyright © Chris McKee 2012")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("CryptSharpSQL")]
+[assembly: AssemblyCopyright("Copyright 2011 James F. Bellinger <jfb@zer7.com>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5c3619dc-750b-4cf6-bcd5-7e4a41620498")]
+[assembly: Guid("81939c85-7f2f-47af-b168-af5a50ec5671")]
 
 // Version information for an assembly consists of the following four values:
 //

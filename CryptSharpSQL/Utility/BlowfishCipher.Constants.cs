@@ -19,7 +19,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #endregion
 
-namespace CryptSharp.Utility
+namespace CryptSharpSQL.Utility
 {
 	public partial class BlowfishCipher
 	{

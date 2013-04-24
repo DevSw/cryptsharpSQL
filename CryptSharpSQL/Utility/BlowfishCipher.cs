@@ -25,7 +25,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // yourself if your particular application requires it (Blowfish
 // crypt does).
 
-namespace CryptSharp.Utility
+namespace CryptSharpSQL.Utility
 {
 	using System;
 	using System.Text;

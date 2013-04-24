@@ -1,45 +1,61 @@
-CryptSharp
-==========
-
-Install using NUGET - https://nuget.org/packages/CryptSharp/
-==========
+CryptSharpSQL
+=============
 
 ------------------
 
-CryptSharp provides Blowfish, BCrypt, SCrypt, and PBKDF2 for any HMAC (.Net's built-in PBKDF2 implementation only supports SHA-1). 
-If you are looking to store passwords in a database, BCrypt is much harder for an attacker to break than, say, simple MD5 or SHA-1.
+This fork of ChrisMcKee/crypsharp is to create a SQL CLR compatible assembly.
 
-You can get a vivid example of the differences in time-to-crack here: https://passfault.appspot.com/
+It has been stripped down, and only the Blowfishcipher.Bcrypt is in use.  It has been tested with SQL Server 2008.
 
-Using CryptSharp is simple. To crypt a password, add the assembly to your references and type:
-
-<pre><code>
-using CryptSharp;
-string crypted = Crypter.Blowfish.Crypt(keyBytes); //or
-string crypted = Crypter.Blowfish.Crypt(keyBytes, Crypter.Blowfish.GenerateSalt(6));
-</code></pre>
-
-To test the crypted password against a potential password, use:
+To create assembly in SQL Server run the following, replacing %PATH% with your path to CryptSharpSQL.dll:
 
 <pre><code>
-using CryptSharp;
-bool matches = (crypted == Crypter.Blowfish.Crypt(testKeyBytes, crypted));
+CREATE ASSEMBLY CryptSharpSQL from '%PATH%\CryptSharpSQL.dll' WITH PERMISSION_SET = SAFE
+GO
 </code></pre>
+
+To add the Crypt Function to SQL:
+<pre><code>
+CREATE FUNCTION Crypt 
+	(
+	@password varbinary(70),
+	@salt nvarchar(40)
+	)
+	RETURNS nvarchar(100)
+AS
+EXTERNAL NAME CryptSharpSQL.[CryptSharpSQL.CrypterSQL].Crypt
+GO
+</code></pre>
+
+To add the GenerateSalt Function to SQL:
+<pre><code>
+CREATE FUNCTION GenerateSalt 
+	(
+	@rounds int
+	)
+	RETURNS nvarchar(40)
+AS
+EXTERNAL NAME CryptSharpSQL.[CryptSharpSQL.CrypterSQL].GenerateSalt
+GO
+</code></pre>
+
+To use in SQL:
+<pre><code>
+/* Create Salt */
+DECLARE @salt nvarchar(40)
+SET @salt = dbo.GenerateSalt(6)
+
+/* Create Hash */
+DECLARE @hash nvarchar(60)
+SET @hash = dbo.Crypt(123456, @salt)
+
+/* test */
+Select @hash
+Select test = dbo.Crypt(123456, @salt)
+</code></pre>
+
 
 Be aware when using BCrypt that only the first 72 bytes of a password are used. This limitation is not specific to this implementation. If you are likely to pass byte arrays over 72 bytes in length, call PadKeyThenCrypt to have the extra bytes removed.
 
 ------------------
-.Net Membership Provider
-==========
-
-If your looking for a way to shore up your .net Membership Provider without having to create your own implementation.
-Take a look at https://github.com/skradel/Zetetic.Security ; it will greatly simplify the addition of
-bcrypt to your SqlMembershipProvider (standard setup).
-
-------------------
-
-_GIT Clone of the source files in http://www.zer7.com/software.php?page=cryptsharp_
-
 _CryptSharp uses the ISC license._
-
-_Taken from the January 23, 2011 download._
